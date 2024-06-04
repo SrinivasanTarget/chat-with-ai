@@ -1,24 +1,23 @@
-    # Node.js
-    node_modules/
-    npm-debug.log
-    yarn-error.log
+node_modules/
+npm-debug.log
+yarn-error.log
 
-    # Dependency directories
-    pnp/
-    .pnp/
-    .pnp.js
+# Dependency directories
+pnp/
+.pnp/
+.pnp.js
 
-    # Optional npm cache directory
-    .npm
+# Optional npm cache directory
+.npm
 
-    # Optional eslint cache
-    .eslintcache
+# Optional eslint cache
+.eslintcache
 
-    # Editor directories and files
-    .vscode/
-    .idea/
-    *.suo
-    *.ntvs*
-    *.njsproj
-    *.sln
-    *.sw*
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*

@@ -1,0 +1,18 @@
+{
+  "name": "chat-with-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "srinivasan.sekar1990@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.13.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "llamaindex": "^0.3.14"
+  }
+}
