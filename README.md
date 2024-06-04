@@ -1,6 +1,6 @@
 # Chat With AI
 
-AI playground to chat with LLM Apps with RAG (local PDFs, websites, etc.)
+AI playground to build LLM Apps with RAG (local PDFs, websites, etc.)
 
 ## Table of Contents
 
