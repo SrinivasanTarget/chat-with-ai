@@ -3,8 +3,10 @@ import {
   Document, 
   serviceContextFromDefaults,
   QueryEngineParamsNonStreaming,
-  Response
+  Response,
+  SimpleDirectoryReader
 } from "llamaindex";
+import path from 'path';
 
 async function chatWithPdf(queryText: string): Promise<{
   query: string;
@@ -12,17 +14,14 @@ async function chatWithPdf(queryText: string): Promise<{
 }> {
   const serviceContext = serviceContextFromDefaults({});
 
-  const retailXContent = `
-    RetailX is a pioneering technology company with the existential purpose of transforming 
-    traditional retail into intelligent, data-driven experiences. The company's core mission 
-    is to revolutionize how businesses interact with customers by providing AI-powered 
-    solutions that enhance customer engagement, optimize operations, and drive sustainable 
-    growth in the retail sector. RetailX believes in creating seamless, personalized shopping 
-    experiences while helping retailers adapt to the rapidly evolving digital landscape.
-  `;
+  // Load PDF from local directory
+  const documents = await new SimpleDirectoryReader().loadData({
+    directoryPath: path.join(process.cwd(), "data"),
+  });
 
+  // Create index from the loaded documents
   const index = await VectorStoreIndex.fromDocuments(
-    [new Document({ text: retailXContent, id_: "retailx_doc" })],
+    documents,
     { serviceContext }
   );
 
@@ -35,7 +34,7 @@ async function chatWithPdf(queryText: string): Promise<{
   
   return {
     query: queryText,
-    response // Return the full Response object, not just response.response
+    response
   };
 }
 
