@@ -21,3 +21,5 @@ pnp/
 *.njsproj
 *.sln
 *.sw*
+.DS_Store
+.env
