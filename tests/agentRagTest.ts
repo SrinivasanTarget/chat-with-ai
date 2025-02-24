@@ -5,17 +5,17 @@ async function runTests() {
 
   try {
     // Test 1: Question that should be answerable from PDF content
-    console.log("\nTest 1: Question from PDF content");
-    const result1 = await chatWithPdf("What is the main topic of the PDF?");
-    console.log(`Source: ${result1.source}`);
-    console.log(
-      `Response: ${
-        result1.response
-          ? result1.response.substring(0, 200) + "..."
-          : "No response"
-      }`
-    );
-    console.log(`Full response object:`, JSON.stringify(result1, null, 2));
+    // console.log("\nTest 1: Question from PDF content");
+    // const result1 = await chatWithPdf("What is the main topic of the PDF?");
+    // console.log(`Source: ${result1.source}`);
+    // console.log(
+    //   `Response: ${
+    //     result1.response
+    //       ? result1.response.substring(0, 200) + "..."
+    //       : "No response"
+    //   }`
+    // );
+    // console.log(`Full response object:`, JSON.stringify(result1, null, 2));
 
     // Test 2: Question requiring external knowledge
     console.log("\nTest 2: Question requiring external knowledge");

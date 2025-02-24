@@ -8,10 +8,13 @@ import {
 } from "llamaindex";
 import path from "path";
 import google from "googlethis";
-import axios from "axios"; // Add axios for alternative search method
+import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // Function to perform Google search with fallback options
-async function getGoogleResults(
+export async function getGoogleResults(
   query: string
 ): Promise<Array<{ text: string; url: string }>> {
   console.log(`Performing Google search for: "${query}"`);
@@ -39,8 +42,13 @@ async function getGoogleResults(
     // Fallback to Serper API if available
     if (process.env.SERPER_API_KEY) {
       console.log("Falling back to Serper API");
-      const serperResults = await searchWithSerper(query);
+      const serperResults = await searchWithSerper(
+        query,
+        "https://github.com/appium/appium"
+      );
+      console.log(`Got ${JSON.stringify(serperResults)} Serper results`);
       if (serperResults.length > 0) {
+        console.log(`Returning ${serperResults.length} Serper results`);
         return serperResults;
       }
     }
@@ -57,12 +65,14 @@ async function getGoogleResults(
 
 // Fallback search with Serper API
 async function searchWithSerper(
-  query: string
+  query: string,
+  siteUrl?: string
 ): Promise<Array<{ text: string; url: string }>> {
   try {
+    const searchQuery = siteUrl ? `site:${siteUrl} ${query}` : query;
     const response = await axios.post(
       "https://google.serper.dev/search",
-      { q: query },
+      { q: searchQuery },
       {
         headers: {
           "X-API-KEY": process.env.SERPER_API_KEY,
@@ -149,7 +159,7 @@ function getFallbackResults(
 }
 
 // Function to determine if response needs Google search
-function needsGoogleSearch(responseText: string): boolean {
+export function needsGoogleSearch(responseText: string): boolean {
   // Check if the response indicates low confidence or lack of information
   const confidenceIndicators = [
     "I don't have",
@@ -169,7 +179,7 @@ function needsGoogleSearch(responseText: string): boolean {
   ];
 
   if (!responseText || responseText.trim() === "") {
-    return true; // If response is empty, definitely need search
+    return true;
   }
 
   const lowerCaseResponse = responseText.toLowerCase();
@@ -190,7 +200,7 @@ interface Citation {
 }
 
 // Function to extract and verify citations
-function extractCitations(
+export function extractCitations(
   text: string,
   source: "pdf" | "web",
   webUrl?: string
@@ -342,7 +352,6 @@ Don't mention that you're combining information from different sources.
         console.log("Synthesizing final response...");
         const synthesisResult = await serviceContext.llm.complete({
           prompt: finalPrompt,
-          temperature: 0.7,
         });
         responseText = synthesisResult.text;
         source = "PDF + Google";

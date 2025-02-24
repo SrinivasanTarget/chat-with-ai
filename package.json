@@ -5,15 +5,20 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "tsx tests/pdfTest.ts"
+    "tests": "tsx tests/pdfTest.ts",
+    "test": "mocha --require ts-node/register/transpile-only --require mocha.setup.ts --timeout 40000 'tests/chatWithPdf.metrics.test.ts'"
   },
   "author": "srinivasan.sekar1990@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "@tsconfig/node16": "^16.1.3",
     "@tsconfig/node16-strictest": "^1.0.4",
+    "@types/chai": "^5.0.1",
     "@types/dotenv": "^6.1.1",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^20.17.16",
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
@@ -22,5 +27,15 @@
     "dotenv": "^16.4.7",
     "googlethis": "^1.8.0",
     "llamaindex": "^0.3.14"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register"
+    ],
+    "extension": [
+      "ts"
+    ],
+    "spec": "src/tests/**/*.test.ts",
+    "loader": "ts-node/esm"
   }
 }
